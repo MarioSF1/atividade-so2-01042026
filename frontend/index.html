@@ -70,7 +70,6 @@ async function carregarDados() {
     const apiBase = 'http://localhost:8000';
     
     try {
-        // Chamada paralela para otimizar performance
         const [resStatus, resClientes, resFuncionarios] = await Promise.all([
             fetch(`${apiBase}/api`),
             fetch(`${apiBase}/listar-clientes`),
@@ -81,13 +80,10 @@ async function carregarDados() {
         const clientes = await resClientes.json();
         const funcionarios = await resFuncionarios.json();
 
-        // Atualiza mensagem de status
         document.getElementById("api-status").innerText = `Servidor: ${statusData.message || statusData.status}`;
 
-        // Renderiza Clientes
         renderizarTabela("tabela-clientes", clientes);
         
-        // Renderiza Funcionários
         renderizarTabela("tabela-funcionarios", funcionarios);
 
     } catch (error) {
